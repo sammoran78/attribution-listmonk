@@ -1,0 +1,14 @@
+{
+  "cairn": {
+    "event_title": "Creative agency in the age of AI",
+    "preheader": "An example of your next reading group invitation — preview only.",
+    "start": "2026-10-20T12:00:00+11:00",
+    "end": "2026-10-20T13:00:00+11:00",
+    "timezone": "Australia/Sydney",
+    "calendar_description": "SAMPLE EVENT ONLY — not a scheduled CAIRN session. A shared discussion of creative agency and AI.",
+    "calendar_ics_url": "",
+    "zoom_url": "https://example.com/replace-with-your-zoom-link",
+    "zoom_meeting_id": "[Meeting ID]",
+    "zoom_passcode": "[Passcode]"
+  }
+}

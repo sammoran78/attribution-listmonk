@@ -1,0 +1,10 @@
+[Unit]
+Description=Back up listmonk PostgreSQL and uploads to the VM disk
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/listmonk/deploy/lightsail
+ExecStart=/bin/sh /opt/listmonk/deploy/lightsail/backup.sh
+UMask=0077

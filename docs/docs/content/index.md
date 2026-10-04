@@ -1,6 +1,6 @@
 # Introduction
 
-[![listmonk](images/logo.svg)](https://listmonk.app)
+[![Creative Attribution](images/creative-attribution-logo.jpg)](https://creativeattribution.com)
 
 listmonk is a self-hosted, high performance one-way mailing list and newsletter manager. It comes as a standalone binary and the only dependency is a Postgres database.
 

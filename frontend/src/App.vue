@@ -4,8 +4,8 @@
       <template #brand>
         <div class="logo">
           <router-link :to="{ name: 'dashboard' }">
-            <img class="full" src="@/assets/logo.svg" alt="" />
-            <img class="favicon" src="@/assets/favicon.png" alt="" />
+            <img class="full" src="@/assets/creative-attribution-logo.jpg" alt="Creative Attribution" />
+            <img class="favicon" src="@/assets/creative-attribution-logo.jpg" alt="Creative Attribution" />
           </router-link>
         </div>
       </template>

@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   Vue.nextTick(() => {
     const t = to.meta.title && i18n.te(to.meta.title) ? `${i18n.tc(to.meta.title, 0)} /` : '';
-    document.title = `${t} listmonk`;
+    document.title = `${t} Creative Attribution`;
   });
 });
 
@@ -69,18 +69,19 @@ async function initConfig(app) {
     }
 
     // If the user role has global list permissions, return true.
-    const can = Vue.prototype.$can('lists:get_all', 'lists:manage_all');
+    const globalPerm = perm === 'list:manage' ? 'lists:manage_all' : 'lists:get_all';
+    const can = Vue.prototype.$can(globalPerm);
     if (can) {
       return true;
     }
 
-    return profile.listRole.lists.some((list) => list.id === id && list.permissions.includes(perm));
+    return profile.listRole?.lists?.some((list) => list.id === id && list.permissions.includes(perm)) || false;
   };
 
   // Set the page title after i18n has loaded.
   const to = router.history.current;
   const title = to.meta.title ? `${i18n.tc(to.meta.title, 0)} /` : '';
-  document.title = `${title} listmonk`;
+  document.title = `${title} Creative Attribution`;
 
   if (app) {
     app.$mount('#app');

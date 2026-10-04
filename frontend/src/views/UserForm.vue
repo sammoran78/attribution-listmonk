@@ -96,7 +96,7 @@
             </div>
 
             <div class="column is-6">
-              <b-field :label="$tc('users.listRole', 0)" label-position="on-border">
+              <b-field :label="$t('users.assignedListRole')" label-position="on-border">
                 <b-select v-model="form.listRoleId" name="list_role" expanded>
                   <option value="">&mdash; {{ $t("globals.terms.none") }} &mdash;</option>
                   <option v-for="r in listRoles" :value="r.id" :key="r.id">
@@ -104,6 +104,9 @@
                   </option>
                 </b-select>
               </b-field>
+              <p class="help" :class="{ 'is-danger': hasGlobalListAccess }">
+                {{ $t(hasGlobalListAccess ? 'users.globalListAccessWarning' : 'users.assignedListRoleHelp') }}
+              </p>
             </div>
           </div>
         </div>
@@ -223,6 +226,11 @@ export default Vue.extend({
 
   computed: {
     ...mapState(['loading', 'userRoles', 'listRoles']),
+
+    hasGlobalListAccess() {
+      const role = this.userRoles.find((r) => r.id === this.form.userRoleId);
+      return role && (role.id === 1 || role.permissions.some((p) => p === 'lists:get_all' || p === 'lists:manage_all'));
+    },
   },
 
   mounted() {

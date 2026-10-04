@@ -1,0 +1,12 @@
+{
+  "logo_media_id": 4,
+  "logo_url": "https://lists.creativeattribution.com/uploads/cairn-logo-band.png",
+  "template_id": 5,
+  "backup": "/opt/listmonk/deploy/lightsail/secrets/cairn-template-before-dark-20261002T213914Z.json",
+  "checks": "passed",
+  "email_sent": false,
+  "logo_asset_sha256": "ced396e012cbd253b5452bdeb717db1fcec3a21567168acdcaa556d44e526639",
+  "dark_logo_media_id": 5,
+  "dark_logo_url": "https://lists.creativeattribution.com/uploads/cairn-logo-band-dark.png",
+  "dark_logo_asset_sha256": "3231b57eb87637c5e2d4f5a7d988bfde2bc69bf504a330092f5147bb7ca116e3"
+}

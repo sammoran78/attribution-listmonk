@@ -17,9 +17,9 @@
 	<script src="/public/custom.js?v={{ .AssetVersion }}" async defer></script>
 
 	{{ if ne .FaviconURL "" }}
-		<link rel="icon" href="{{ .FaviconURL }}" type="image/x-icon" />
+		<link rel="icon" href="{{ .FaviconURL }}" />
 	{{ else }}
-		<link rel="icon" href="/public/static/favicon.png?v={{ .AssetVersion }}" type="image/png" />
+		<link rel="icon" href="/public/static/creative-attribution-logo.jpg?v={{ .AssetVersion }}" type="image/jpeg" />
 	{{ end }}
 </head>
 <body>
@@ -30,7 +30,7 @@
 				{{ if ne .LogoURL "" }}
 					<img src="{{ .LogoURL }}" alt="{{ .Data.Title }}" />
 				{{ else }}
-					<img src="/public/static/logo.svg?v={{ .AssetVersion }}" alt="{{ .Data.Title }}" />
+					<img src="/public/static/creative-attribution-logo.jpg?v={{ .AssetVersion }}" alt="Creative Attribution" />
 				{{ end }}
 				</a>
 			</div>

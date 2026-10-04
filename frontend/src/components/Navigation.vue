@@ -7,7 +7,8 @@
       @update:active="(state) => toggleGroup('lists', state)" icon="format-list-bulleted-square"
       :label="$t('globals.terms.lists')">
       <b-menu-item :to="{ name: 'lists' }" tag="router-link" :active="activeItem.lists" data-cy="all-lists"
-        icon="format-list-bulleted-square" :label="$t('menu.allLists')" />
+        icon="format-list-bulleted-square"
+        :label="$t($can('lists:get_all', 'lists:manage_all') ? 'menu.allLists' : 'users.assignedLists')" />
       <b-menu-item :to="{ name: 'forms' }" tag="router-link" :active="activeItem.forms" class="forms"
         icon="newspaper-variant-outline" :label="$t('menu.forms')" />
     </b-menu-item><!-- lists -->

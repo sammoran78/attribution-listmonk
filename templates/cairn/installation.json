@@ -1,0 +1,10 @@
+{
+  "template_id": 5,
+  "campaign_id": 3,
+  "list_id": 6,
+  "logo_media_id": 1,
+  "sample_calendar_media_id": 2,
+  "logo_url": "https://lists.creativeattribution.com/uploads/cairn-main-logo.png",
+  "sample_calendar_url": "https://lists.creativeattribution.com/uploads/cairn-reading-group.ics",
+  "checks": "passed"
+}

@@ -23,3 +23,8 @@
 **/values.dev.yaml
 LICENSE
 README.md
+deploy/lightsail/secrets/
+deploy/lightsail/backups/
+deploy/lightsail/*.tar
+deploy/lightsail/*.tar.gz
+!frontend/.gitignore

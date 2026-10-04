@@ -2,8 +2,8 @@ site_name: listmonk / Documentation
 theme:
   name: material
   # custom_dir: "mkdocs-material/material"
-  logo: "images/favicon.png"
-  favicon: "images/favicon.png"
+  logo: "images/creative-attribution-logo.jpg"
+  favicon: "images/creative-attribution-logo.jpg"
   language: "en"
   font:
     text: 'Inter'

@@ -75,6 +75,19 @@
         </div>
 
         <template v-if="type === 'user'">
+          <div class="box">
+            <b-field :label="$t('users.listVisibility')">
+              <b-select v-model="listVisibility" :disabled="disabled" expanded>
+                <option value="assigned">{{ $t('users.assignedListsOnly') }}</option>
+                <option value="all">{{ $t('menu.allLists') }}</option>
+              </b-select>
+            </b-field>
+            <p class="help">{{ $t('users.assignedListsHelp') }}</p>
+            <b-checkbox v-if="listVisibility === 'all'" v-model="form.permissions"
+              native-value="lists:manage_all" :disabled="disabled">
+              {{ $t('users.manageAllLists') }}
+            </b-checkbox>
+          </div>
           <div class="columns">
             <div class="column is-7">
               <h5 class="mb-0">
@@ -86,7 +99,7 @@
             </div>
           </div>
 
-          <b-table :data="serverConfig.permissions">
+          <b-table :data="permissionGroups">
             <b-table-column v-slot="props" field="group" :label="$t('users.roleGroup')">
               {{ $tc(`globals.terms.${props.row.group}`) }}
             </b-table-column>
@@ -239,6 +252,26 @@ export default Vue.extend({
   computed: {
     ...mapState(['loading', 'serverConfig', 'lists']),
 
+    permissionGroups() {
+      return this.serverConfig.permissions.filter((group) => group.group !== 'lists');
+    },
+
+    listVisibility: {
+      get() {
+        const perms = this.form.permissions;
+        return Array.isArray(perms) && perms.some((p) => p === 'lists:get_all' || p === 'lists:manage_all')
+          ? 'all' : 'assigned';
+      },
+      set(value) {
+        const perms = this.form.permissions.filter((p) => p !== 'lists:get_all' && p !== 'lists:manage_all');
+        if (value === 'all') {
+          perms.push('lists:get_all');
+          if (this.form.permissions.includes('lists:manage_all')) perms.push('lists:manage_all');
+        }
+        this.form.permissions = perms;
+      },
+    },
+
     // Return the list of unselected lists.
     filteredLists() {
       if (!this.lists.results || this.type !== 'list') {
@@ -252,6 +285,9 @@ export default Vue.extend({
   },
 
   mounted() {
+    if (this.type === 'list') {
+      this.$api.getLists({ per_page: 'all', minimal: true });
+    }
     if (this.isEditing) {
       this.form = { ...this.form, ...this.$props.data };
 
@@ -266,7 +302,7 @@ export default Vue.extend({
           return acc;
         }
         item.permissions.forEach((p) => {
-          if (p !== 'subscribers:sql_query' && !p.startsWith('lists:') && !p.startsWith('settings:')) {
+          if (p !== 'subscribers:sql_query' && !p.endsWith('_all') && !p.startsWith('lists:') && !p.startsWith('settings:')) {
             acc.push(p);
           }
         });

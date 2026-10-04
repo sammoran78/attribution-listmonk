@@ -619,9 +619,22 @@ func (a *App) GetCampaignViewAnalytics(c echo.Context) error {
 	}
 
 	// Ensure the user has access to campaigns via lists.
+	u := auth.GetUser(c)
+	allLists, listIDs := u.GetPermittedLists(auth.PermTypeGet | auth.PermTypeManage)
 	for _, id := range ids {
 		if err := a.checkCampaignPerm(auth.PermTypeGet, id, c); err != nil {
 			return err
+		}
+		// Global campaign permissions must not bypass assigned-list analytics.
+		if !allLists {
+			ok, err := a.core.CampaignHasLists(id, listIDs)
+			if err != nil {
+				return err
+			}
+			if !ok {
+				return echo.NewHTTPError(http.StatusForbidden,
+					a.i18n.Ts("globals.messages.permissionDenied", "name", auth.PermCampaignsGet))
+			}
 		}
 	}
 
@@ -636,7 +649,7 @@ func (a *App) GetCampaignViewAnalytics(c echo.Context) error {
 
 	// Campaign link stats.
 	if typ == "links" {
-		out, err := a.core.GetCampaignAnalyticsLinks(ids, typ, from, to)
+		out, err := a.core.GetCampaignAnalyticsLinks(ids, typ, from, to, allLists, listIDs)
 		if err != nil {
 			return err
 		}
@@ -645,7 +658,7 @@ func (a *App) GetCampaignViewAnalytics(c echo.Context) error {
 	}
 
 	// Get the analytics numbers from the DB for the campaigns.
-	out, err := a.core.GetCampaignAnalyticsCounts(ids, typ, from, to)
+	out, err := a.core.GetCampaignAnalyticsCounts(ids, typ, from, to, allLists, listIDs)
 	if err != nil {
 		return err
 	}

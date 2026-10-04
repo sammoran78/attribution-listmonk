@@ -49,10 +49,12 @@
         <b-tabs type="is-boxed" :animated="false">
           <b-tab-item :label="$t('globals.terms.lists')" label-position="on-border">
             <list-selector :label="$t('subscribers.lists')" :placeholder="$t('subscribers.listsPlaceholder')"
-              :message="$t('subscribers.listsHelp')" v-model="form.lists" :selected="form.lists" :all="lists.results" />
+              :message="$t(manageableLists.length ? 'subscribers.listsHelp' : 'subscribers.noManageableLists')"
+              v-model="form.lists" :selected="form.lists" :all="manageableLists" />
             <div class="columns">
               <div class="column is-7">
-                <b-field :message="$t('subscribers.preconfirmHelp')">
+                <b-field :message="$t(hasOptinList ? 'subscribers.preconfirmHelp'
+                  : (form.lists.length ? 'subscribers.preconfirmSingleHelp' : 'subscribers.preconfirmSelectHelp'))">
                   <b-checkbox v-model="form.preconfirm" :native-value="true" :disabled="!hasOptinList">
                     {{ $t('subscribers.preconfirm') }}
                   </b-checkbox>
@@ -272,6 +274,8 @@ export default Vue.extend({
         this.$emit('finished');
         this.$parent.close();
         this.$utils.toast(this.$t('globals.messages.created', { name: d.name }));
+      }).catch(() => {
+        // The API interceptor displays the server error; keep the form open.
       });
     },
 
@@ -300,6 +304,8 @@ export default Vue.extend({
         this.$emit('finished');
         this.$parent.close();
         this.$utils.toast(this.$t('globals.messages.updated', { name: d.name }));
+      }).catch(() => {
+        // The API interceptor displays the server error; keep the form open.
       });
     },
 
@@ -334,6 +340,10 @@ export default Vue.extend({
 
   computed: {
     ...mapState(['lists', 'loading']),
+
+    manageableLists() {
+      return (this.lists.results || []).filter((l) => this.$canList(l.id, 'list:manage'));
+    },
 
     hasOptinList() {
       return this.form.lists.some((l) => l.optin === 'double');

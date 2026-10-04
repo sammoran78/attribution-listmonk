@@ -1,0 +1,85 @@
+name: attribution-listmonk
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "5m"
+    max-file: "2"
+
+services:
+  db:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    restart: unless-stopped
+    mem_limit: 256m
+    logging: *logging
+    environment:
+      POSTGRES_USER: listmonk
+      POSTGRES_DB: listmonk
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets: [db_password]
+    command: [postgres, -c, shared_buffers=32MB, -c, work_mem=2MB, -c, maintenance_work_mem=32MB, -c, max_connections=15]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U listmonk -d listmonk"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    image: attribution-listmonk:${LISTMONK_IMAGE_TAG:?Set the tested fork commit tag}
+    restart: unless-stopped
+    mem_limit: 256m
+    logging: *logging
+    depends_on:
+      db:
+        condition: service_healthy
+    command: [sh, -c, "./listmonk --install --idempotent --yes --config '' && exec ./listmonk --config ''"]
+    environment:
+      LISTMONK_app__address: 0.0.0.0:9000
+      LISTMONK_db__host: db
+      LISTMONK_db__port: "5432"
+      LISTMONK_db__user: listmonk
+      LISTMONK_db__database: listmonk
+      LISTMONK_db__password_FILE: /run/secrets/db_password
+      LISTMONK_db__ssl_mode: disable
+      LISTMONK_db__max_open: "5"
+      LISTMONK_db__max_idle: "2"
+      LISTMONK_db__max_lifetime: 300s
+      LISTMONK_ADMIN_USER: ${LISTMONK_ADMIN_USER:-admin}
+      LISTMONK_ADMIN_PASSWORD_FILE: /run/secrets/admin_password
+      GOMEMLIMIT: 192MiB
+      TZ: Australia/Sydney
+      PUID: "10001"
+      PGID: "10001"
+    secrets: [db_password, admin_password]
+    volumes:
+      - uploads:/listmonk/uploads
+
+  proxy:
+    image: caddy:2-alpine@sha256:6aeddd44c3078b0f9a35206472a11420648a79c184603ef95957d0a20044cb2b
+    restart: unless-stopped
+    mem_limit: 128m
+    logging: *logging
+    environment:
+      LISTMONK_DOMAIN: ${LISTMONK_DOMAIN:?Set your public hostname}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [app]
+
+secrets:
+  db_password:
+    file: ./secrets/db_password
+  admin_password:
+    file: ./secrets/admin_password
+
+volumes:
+  postgres_data:
+  uploads:
+  caddy_data:
+  caddy_config:

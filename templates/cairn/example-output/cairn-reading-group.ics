@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CAIRN//Reading Group//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:061a1c40-8075-4723-908e-edfa44f6151a@cairn.org.au
+DTSTAMP:20261002T110259Z
+DTSTART:20261020T010000Z
+DTEND:20261020T020000Z
+SUMMARY:Creative agency in the age of AI
+DESCRIPTION:SAMPLE EVENT ONLY — not a scheduled CAIRN session. A shared d
+ iscussion of creative agency and AI.\n\nJoin Zoom: https://example.com/rep
+ lace-with-your-zoom-link\nMeeting ID: [Meeting ID]\nPasscode: [Passcode]
+LOCATION:https://example.com/replace-with-your-zoom-link
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

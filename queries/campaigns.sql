@@ -238,8 +238,10 @@ WITH intval AS (
 ),
 uniqIDs AS (
     SELECT DISTINCT ON(subscriber_id, campaign_id) subscriber_id, campaign_id, DATE_TRUNC((SELECT * FROM intval), created_at) AS "timestamp"
-    FROM %s
+    FROM %s AS events
     WHERE campaign_id=ANY($1) AND created_at >= $2 AND created_at <= $3
+      AND ($4 OR EXISTS (SELECT 1 FROM campaign_lists cl
+                         WHERE cl.campaign_id = events.campaign_id AND cl.list_id = ANY($5::INT[])))
     ORDER BY subscriber_id, campaign_id, "timestamp"
 )
 SELECT COUNT(*) AS "count", campaign_id, "timestamp"
@@ -252,8 +254,10 @@ WITH intval AS (
     SELECT CASE WHEN (EXTRACT (EPOCH FROM ($3::TIMESTAMP - $2::TIMESTAMP)) / 86400) >= 7 THEN 'day' ELSE 'hour' END
 )
 SELECT campaign_id, COUNT(*) AS "count", DATE_TRUNC((SELECT * FROM intval), created_at) AS "timestamp"
-    FROM %s
+    FROM %s AS events
     WHERE campaign_id=ANY($1) AND created_at >= $2 AND created_at <= $3
+      AND ($4 OR EXISTS (SELECT 1 FROM campaign_lists cl
+                         WHERE cl.campaign_id = events.campaign_id AND cl.list_id = ANY($5::INT[])))
     GROUP BY campaign_id, "timestamp" ORDER BY "timestamp" ASC;
 
 -- name: get-campaign-bounce-counts
@@ -264,6 +268,8 @@ WITH intval AS (
 SELECT campaign_id, COUNT(*) AS "count", DATE_TRUNC((SELECT * FROM intval), created_at) AS "timestamp"
     FROM bounces
     WHERE campaign_id=ANY($1) AND created_at >= $2 AND created_at <= $3
+      AND ($4 OR EXISTS (SELECT 1 FROM campaign_lists cl
+                         WHERE cl.campaign_id = bounces.campaign_id AND cl.list_id = ANY($5::INT[])))
     GROUP BY campaign_id, "timestamp" ORDER BY "timestamp" ASC;
 
 -- name: get-campaign-link-counts
@@ -273,6 +279,8 @@ SELECT COUNT(%s) AS "count", url
     FROM link_clicks
     LEFT JOIN links ON (link_clicks.link_id = links.id)
     WHERE campaign_id=ANY($1) AND link_clicks.created_at >= $2 AND link_clicks.created_at <= $3
+      AND ($4 OR EXISTS (SELECT 1 FROM campaign_lists cl
+                         WHERE cl.campaign_id = link_clicks.campaign_id AND cl.list_id = ANY($5::INT[])))
     GROUP BY links.url ORDER BY "count" DESC LIMIT 50;
 
 -- name: export-campaign-views
@@ -486,4 +494,3 @@ WITH view AS (
 )
 INSERT INTO campaign_views (campaign_id, subscriber_id)
     VALUES((SELECT campaign_id FROM view), (SELECT subscriber_id FROM view));
-

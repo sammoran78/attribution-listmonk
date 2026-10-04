@@ -7,6 +7,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/knadh/listmonk/internal/auth"
 	"github.com/knadh/listmonk/internal/captcha"
 	"github.com/labstack/echo/v4"
 	null "gopkg.in/volatiletech/null.v6"
@@ -99,8 +100,9 @@ func (a *App) GetServerConfig(c echo.Context) error {
 
 // GetDashboardCharts returns chart data points to render ont he dashboard.
 func (a *App) GetDashboardCharts(c echo.Context) error {
-	// Get the chart data from the DB.
-	out, err := a.core.GetDashboardCharts()
+	u := auth.GetUser(c)
+	allLists, listIDs := u.GetPermittedLists(auth.PermTypeGet | auth.PermTypeManage)
+	out, err := a.core.GetDashboardCharts(allLists, listIDs)
 	if err != nil {
 		return err
 	}
@@ -110,8 +112,9 @@ func (a *App) GetDashboardCharts(c echo.Context) error {
 
 // GetDashboardCounts returns stats counts to show on the dashboard.
 func (a *App) GetDashboardCounts(c echo.Context) error {
-	// Get the chart data from the DB.
-	out, err := a.core.GetDashboardCounts()
+	u := auth.GetUser(c)
+	allLists, listIDs := u.GetPermittedLists(auth.PermTypeGet | auth.PermTypeManage)
+	out, err := a.core.GetDashboardCounts(allLists, listIDs)
 	if err != nil {
 		return err
 	}
