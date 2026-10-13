@@ -1,0 +1,16 @@
+{
+  "campaign_id": 3,
+  "image_tag": "3f9177a5-event-links-20261009",
+  "verification_date": "2026-10-09",
+  "live_editor_save_and_reload": "passed",
+  "custom_attribute_keys_preserved": true,
+  "preview_event": "2026-10-16 12:30-13:30 Australia/Sydney (AEDT)",
+  "preview_links_present": ["Google Calendar", "Outlook / Microsoft 365", "Apple / .ics", "Join Zoom meeting"],
+  "calendar_ics_url": "https://lists.creativeattribution.com/uploads/cairn-joint-select-committee-2026-10-16.ics",
+  "calendar_download_http_status": 200,
+  "calendar_download_content_type": "text/calendar; charset=utf-8",
+  "zoom_url": "https://macquarie.zoom.us/j/88625432585",
+  "campaign_status": "draft",
+  "emails_sent": false,
+  "new_aws_resources": false
+}

@@ -1,0 +1,60 @@
+COLO COLO SYDNEY / FOOTBALL
+{{ $c := .Campaign.Attribs.colocolo | default dict }}
+{{ $c.title }}
+{{ $c.intro }}
+
+Hello{{ with .Subscriber.FirstName }} {{ . }}{{ end }},
+
+[Add a short update for players, parents, carers and coaches.]
+
+01 / This week
+
+Training & ground updates
+
+Group / team: [age group or team]
+
+Training: [day, date and time]
+
+Ground: [venue and meeting point]
+
+Bring: [kit and equipment]
+
+Wet weather: [where and when changes will be announced]
+
+02 / Plan ahead
+
+Season dates
+
+Registration: [opening and closing dates]
+
+First session / round: [confirmed date]
+
+Breaks & final round: [confirmed dates]
+
+
+
+03 / Escuela & camps
+
+[Training camp or school update]
+
+[Add age groups, dates, venue, places, confirmed costs and a verified registration link.]
+
+Escuela information & interest →: https://colocolosydney.com/escuela/
+
+04 / Teams & social soccer
+
+[Fixtures, social games & team functions]
+
+[Add team fixtures, social soccer arrangements, team functions and RSVP deadlines.]
+
+Football contact: [name and preferred contact details]
+
+Contact the football organisers →: https://colocolosydney.com/contact/
+
+
+Colo Colo Sports Social Club Incorporated
+P.O. Box 642, Fairfield, NSW 2165
+https://colocolosydney.com/
+Manage preferences: {{ UnsubscribeURL }}?manage=true
+Unsubscribe: {{ UnsubscribeURL }}
+View in browser: {{ MessageURL }}

@@ -1,0 +1,13 @@
+{
+  "verified_at_utc": "2026-10-12T13:08:29.537973+00:00",
+  "destination_parent_folder_id": "1kIw7aGYwKAJFpviMJUcrQOSTCbKZyywx",
+  "backup_folder_id": "1dvS3WSt9xx9-8H1OmVLYix7vpcdZC7J_",
+  "encrypted_folder_id": "1O14HkKdGdPXefO-7Ivzoj2xmDmkRL7ur",
+  "existing_backup_files": 4,
+  "existing_file_ids_sizes_and_hashes_unchanged": true,
+  "encrypted_write_read_probe_passed": true,
+  "probe_moved_to_trash": true,
+  "scheduled_remote_path": "listmonk-drive:Mailing List Backups/encrypted",
+  "automation_shortcut_id": "1dcHANDRzOKQwklEeFUWBcWJUxNU61kSg",
+  "database_restore_test_performed": false
+}

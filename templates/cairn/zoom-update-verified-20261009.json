@@ -1,0 +1,17 @@
+{
+  "checks": "passed",
+  "campaign_ids": [
+    3
+  ],
+  "template_ids": [],
+  "calendar_files": [
+    "cairn-joint-select-committee-2026-10-16.ics",
+    "cairn-lunchtime-reading-group-2026-10-16.ics"
+  ],
+  "zoom_url": "https://macquarie.zoom.us/j/83101513504",
+  "zoom_meeting_id": "831 0151 3504",
+  "dates_titles_uids_preserved": true,
+  "plain_text_preview": "passed",
+  "emails_sent": false,
+  "new_aws_resources": false
+}

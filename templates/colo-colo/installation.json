@@ -1,0 +1,36 @@
+{
+  "status": "verified",
+  "existing_template_hashes": {
+    "1": "6690ecef7327303f36993654bd2c44c166803d176349d24f51167e60bb8d045e",
+    "2": "8b6b7b39b1dfb14aa77e79e6dc9955783980ccb84d55dc9726b3ca58228026f9",
+    "3": "ea4102539b79ec193bd254ca551d2e8afaebe02a28c6a1bb4c81eb22dac453f5",
+    "4": "e3d3177896b183f5ea5005c688449607f03425683031bcee29888f1d04b3d9bf",
+    "5": "2c0e0b754076684340867f0b46ff5fb6d8cb9bf3ef4859e843fde64b5e85a415"
+  },
+  "items": {
+    "committee": {
+      "template_id": 6,
+      "list_id": 8,
+      "campaign_id": 6,
+      "verified": "draft, list, template, attributes, preview, zero sends"
+    },
+    "members": {
+      "template_id": 7,
+      "list_id": 9,
+      "campaign_id": 7,
+      "verified": "draft, list, template, attributes, preview, zero sends"
+    },
+    "newsletter": {
+      "template_id": 8,
+      "list_id": 10,
+      "campaign_id": 8,
+      "verified": "draft, list, template, attributes, preview, zero sends"
+    },
+    "football": {
+      "template_id": 9,
+      "list_id": 11,
+      "campaign_id": 9,
+      "verified": "draft, list, template, attributes, preview, zero sends"
+    }
+  }
+}

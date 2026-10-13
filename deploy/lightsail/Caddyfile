@@ -1,4 +1,16 @@
 {$LISTMONK_DOMAIN} {
     encode gzip
-    reverse_proxy app:9000
+    handle /backup-info {
+        root * /data/listmonk-backup-info
+        rewrite * /index.html
+        file_server
+    }
+    handle /backup-privacy {
+        root * /data/listmonk-backup-info
+        rewrite * /privacy.html
+        file_server
+    }
+    handle {
+        reverse_proxy app:9000
+    }
 }

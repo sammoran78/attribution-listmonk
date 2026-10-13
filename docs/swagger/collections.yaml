@@ -2114,6 +2114,10 @@ paths:
                   type: string
                 email:
                   type: string
+                phone:
+                  type: string
+                  maxLength: 64
+                  description: Optional phone number, stored in attribs.phone for new subscribers. Repeat signups preserve the existing profile.
                 list_uuids:
                   type: array
                   items:

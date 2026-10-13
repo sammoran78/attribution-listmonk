@@ -45,6 +45,25 @@ make dev-docker
 
 Visit `http://localhost:8080` on your browser.
 
+### Subscriber phone numbers
+
+The admin subscriber editor, public signup page, generated embed forms, and
+subscriber preferences include an optional phone number. It is stored as a string
+in `subscribers.attribs.phone`; no schema migration is needed. Country prefixes,
+leading zeroes, spaces, and extensions are preserved. The forms accept up to
+64 characters and trim surrounding whitespace.
+
+The admin API accepts it in `attribs`, for example
+`{"attribs":{"phone":"+61 412 345 678"}}`. CSV imports and exports carry it in
+the existing `attributes` JSON column. The public signup API accepts `phone`
+alongside `email` and `name`. As with names, repeat public signups do not replace
+an existing subscriber's profile; use the admin editor or subscriber preferences
+to change or clear the number. Preference submissions that omit `phone` preserve
+the saved number, while an explicitly empty field removes it.
+
+Run the focused checks with `go test ./models` and, from `frontend`,
+`node --test tests/subscriber-phone.test.cjs`.
+
 ### Tear down
 
 This will tear down all the data, including DB.

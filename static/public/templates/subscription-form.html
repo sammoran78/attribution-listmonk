@@ -16,6 +16,11 @@
                 <input id="name" name="name" type="text" placeholder="{{ L.T "public.subName" }}" >
             </p>
 
+            <p>
+                <label for="phone">{{ L.T "subscribers.phone" }}</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="64" placeholder="{{ L.T "subscribers.phone" }}" >
+            </p>
+
             <ul class="lists">
                 <h2>{{ L.T "globals.terms.lists" }}</h2>
                 {{ range $i, $l := .Data.Lists }}

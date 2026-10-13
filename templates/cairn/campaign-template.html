@@ -68,7 +68,8 @@
 </head>
 {{ $e := .Campaign.Attribs.cairn | default dict }}
 {{ $zone := $e.timezone | default "Australia/Sydney" }}
-{{ $title := $e.event_title | default "Our next reading group" }}
+{{ $title := ($e.event_title | default $e.eventTitle) | default "Our next reading group" }}
+{{ $calendarTitle := ($e.calendar_title | default $e.calendarTitle) | default "CAIRN: Lunchtime Reading Group" }}
 <body class="cairn-page" bgcolor="#ffebcc" style="background-color:#ffebcc;color:#3a312e;font-family:Inter,Arial,Helvetica,sans-serif;">
   <div style="display:none;font-size:1px;line-height:1px;color:#ffebcc;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">{{ $e.preheader | default "Shared reading. New perspectives. Join the next CAIRN reading group." }}</div>
   <table class="cairn-outer" role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffebcc" style="background-color:#ffebcc;">
@@ -101,15 +102,15 @@
               <p style="margin:0 0 5px;font-size:21px;font-weight:700;line-height:28px;">{{ dateInZone "Monday, 2 January 2006" $start $zone }}</p>
               <p style="margin:0 0 5px;font-size:16px;line-height:25px;">{{ dateInZone "3:04 pm" $start $zone }}–{{ dateInZone "3:04 pm MST" $end $zone }}{{ if ne (dateInZone "2006-01-02" $start $zone) (dateInZone "2006-01-02" $end $zone) }} (ends {{ dateInZone "Monday, 2 January" $end $zone }}){{ end }}</p>
               <p style="margin:0 0 16px;font-size:13px;line-height:21px;color:#685851;">{{ $zone }} &nbsp;·&nbsp; Online via Zoom</p>
-              {{ $details := printf "CAIRN reading group: %s\n%s\nZoom: %s" $title ($e.calendar_description | default "") ($e.zoom_url | default "Joining link to be confirmed") }}
+              {{ $details := printf "CAIRN reading group: %s\n%s\nZoom: %s" $title (($e.calendar_description | default $e.calendarDescription) | default "") (($e.zoom_url | default $e.zoomUrl) | default "Joining link to be confirmed") }}
               {{ $dates := printf "%s/%s" (dateInZone "20060102T150405Z" $start "UTC") (dateInZone "20060102T150405Z" $end "UTC") }}
-              {{ $google := printf "https://calendar.google.com/calendar/render?action=TEMPLATE&text=%s&dates=%s&details=%s&location=%s&ctz=%s" (urlquery $title) (urlquery $dates) (urlquery $details) (urlquery ($e.zoom_url | default "Online via Zoom")) (urlquery $zone) }}
-              {{ $outlook := printf "https://outlook.office.com/calendar/0/deeplink/compose?path=%%2Fcalendar%%2Faction%%2Fcompose&rru=addevent&subject=%s&startdt=%s&enddt=%s&body=%s&location=%s" (urlquery $title) (urlquery (dateInZone "2006-01-02T15:04:05Z" $start "UTC")) (urlquery (dateInZone "2006-01-02T15:04:05Z" $end "UTC")) (urlquery $details) (urlquery ($e.zoom_url | default "Online via Zoom")) }}
+              {{ $google := printf "https://calendar.google.com/calendar/render?action=TEMPLATE&text=%s&dates=%s&details=%s&location=%s&ctz=%s" (urlquery $calendarTitle) (urlquery $dates) (urlquery $details) (urlquery (($e.zoom_url | default $e.zoomUrl) | default "Online via Zoom")) (urlquery $zone) }}
+              {{ $outlook := printf "https://outlook.office.com/calendar/0/deeplink/compose?path=%%2Fcalendar%%2Faction%%2Fcompose&rru=addevent&subject=%s&startdt=%s&enddt=%s&body=%s&location=%s" (urlquery $calendarTitle) (urlquery (dateInZone "2006-01-02T15:04:05Z" $start "UTC")) (urlquery (dateInZone "2006-01-02T15:04:05Z" $end "UTC")) (urlquery $details) (urlquery (($e.zoom_url | default $e.zoomUrl) | default "Online via Zoom")) }}
               <p style="margin:0 0 8px;font-size:12px;font-weight:700;line-height:20px;">ADD TO YOUR CALENDAR</p>
               <p style="margin:0;font-size:13px;line-height:22px;">
                 <a class="calendar-link" href="{{ $google }}" style="font-weight:700;color:#784322;text-decoration:underline;">Google Calendar</a><span class="calendar-separator"> &nbsp;/&nbsp; </span>
                 <a class="calendar-link" href="{{ $outlook }}" style="font-weight:700;color:#784322;text-decoration:underline;">Outlook / Microsoft 365</a>
-                {{ with $e.calendar_ics_url }}<span class="calendar-separator"> &nbsp;/&nbsp; </span><a class="calendar-link" href="{{ . }}" style="font-weight:700;color:#784322;text-decoration:underline;">Apple / .ics</a>{{ end }}
+                {{ with ($e.calendar_ics_url | default $e.calendarIcsUrl) }}<span class="calendar-separator"> &nbsp;/&nbsp; </span><a class="calendar-link" href="{{ . }}" style="font-weight:700;color:#784322;text-decoration:underline;">Apple / .ics</a>{{ end }}
               </p>
               {{ else }}
               <p style="margin:0 0 6px;font-size:21px;line-height:28px;font-weight:700;">Date and time to be confirmed</p>
@@ -127,7 +128,7 @@
               <p class="cairn-accent" style="margin:0 0 9px;font-size:11px;font-weight:700;line-height:18px;letter-spacing:1.5px;color:#f0cf9d;">JOIN THE CONVERSATION</p>
               <h2 style="margin:0 0 10px;font-size:23px;line-height:30px;color:#fffaf3;">Meet us on Zoom</h2>
               <p style="margin:0 0 18px;font-size:14px;line-height:23px;color:#fffaf3;">Bring your questions and a perspective from your own discipline.</p>
-              {{ with $e.zoom_url }}
+              {{ with ($e.zoom_url | default $e.zoomUrl) }}
               <table role="presentation" cellpadding="0" cellspacing="0"><tr><td class="cairn-button" bgcolor="#ffebcc" style="background-color:#ffebcc;mso-padding-alt:13px 24px;">
                 <a href="{{ . }}" style="display:inline-block;padding:13px 24px;color:#3a312e;font-size:15px;font-weight:700;line-height:20px;text-decoration:none;">Join Zoom meeting &nbsp;→</a>
               </td></tr></table>
@@ -135,7 +136,7 @@
               {{ else }}
               <p style="margin:0;font-size:14px;line-height:22px;color:#ffebcc;">Joining link to be confirmed.</p>
               {{ end }}
-              {{ if or $e.zoom_meeting_id $e.zoom_passcode }}<p style="margin:12px 0 0;font-size:13px;line-height:23px;color:#fffaf3;">{{ with $e.zoom_meeting_id }}Meeting ID: <strong>{{ . }}</strong>{{ end }}{{ if and $e.zoom_meeting_id $e.zoom_passcode }}<br>{{ end }}{{ with $e.zoom_passcode }}Passcode: <strong>{{ . }}</strong>{{ end }}</p>{{ end }}
+              {{ if or ($e.zoom_meeting_id | default $e.zoomMeetingId) ($e.zoom_passcode | default $e.zoomPasscode) }}<p style="margin:12px 0 0;font-size:13px;line-height:23px;color:#fffaf3;">{{ with ($e.zoom_meeting_id | default $e.zoomMeetingId) }}Meeting ID: <strong>{{ . }}</strong>{{ end }}{{ if and ($e.zoom_meeting_id | default $e.zoomMeetingId) ($e.zoom_passcode | default $e.zoomPasscode) }}<br>{{ end }}{{ with ($e.zoom_passcode | default $e.zoomPasscode) }}Passcode: <strong>{{ . }}</strong>{{ end }}</p>{{ end }}
             </td></tr>
           </table>
         </td></tr>

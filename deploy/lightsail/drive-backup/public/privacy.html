@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy — Mailing List Backups</title>
+<style>body{font:18px/1.65 system-ui,sans-serif;max-width:760px;margin:64px auto;padding:0 24px;color:#202b38}h1,h2{line-height:1.2}a{color:#175aa5}</style>
+<main>
+<p><a href="/backup-info">Mailing List Backups</a></p>
+<h1>Privacy and Google Drive data use</h1>
+<p>Updated 12 October 2026. This notice describes the private Google Drive backup tool for the Creative Attribution mailing-list server.</p>
+<h2>Purpose and permissions</h2>
+<p>The tool uses the Google Drive API solely to create, verify, retrieve, and retire disaster-recovery backups in the administrator's Drive account. It requests the <code>drive.file</code> permission, covering files created or explicitly opened with this app. It does not request access to all existing Drive files, Gmail, Google Contacts, or Google Photos.</p>
+<h2>Information handled</h2>
+<p>Backup files contain a database export and uploaded media from the mailing-list server. The database includes subscriber contact details, list memberships, subscription and unsubscribe status, campaigns, templates, settings, and other records held by the server. The tool also handles backup file identifiers, sizes, timestamps, and authorization tokens needed to use Drive.</p>
+<h2>Storage and use</h2>
+<p>Backup contents and filenames are encrypted on the server before upload using rclone crypt. Google Drive stores the encrypted files and associated storage metadata. Access is intended for the mailing-list administrator; the tool does not publish or share backups, sell their contents, use them for advertising, or use Google user data to train AI models.</p>
+<p>OAuth tokens and the encryption configuration are stored privately on the administrator's computer and server. An administrator must retain a separate recovery copy of the encryption configuration to restore encrypted backups.</p>
+<h2>Retention and deletion</h2>
+<p>The automatic schedule is daily, retaining approximately 30 days of verified backups. Older backup files are moved to Drive's Trash only after a newer upload is verified. Trashed files continue to use storage until Google removes them or the administrator empties Trash. Existing backup copies remain until deleted; revoking access does not delete them.</p>
+<h2>Control and contact</h2>
+<p>The administrator can stop the server's backup job, remove its saved authorization, revoke the app through <a href="https://myaccount.google.com/connections">Google Account connections</a>, or delete backup files in Drive. For questions or removal requests, contact the administrator using the support email shown on this app's Google consent screen.</p>
+<p>The tool's use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
+</main>
+</html>

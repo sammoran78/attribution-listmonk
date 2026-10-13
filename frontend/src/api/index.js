@@ -17,6 +17,9 @@ const http = axios.create({
 
 const utils = new Utils();
 
+// Campaign attributes and custom headers are user-defined keys consumed verbatim.
+const campaignCamelCase = (keyPath) => !/^\.(?:results\.\*\.)?(?:headers|attribs)(?:\.|$)/.test(keyPath);
+
 // Intercept requests to set the 'loading' state of a model.
 http.interceptors.request.use((config) => {
   if ('loading' in config) {
@@ -286,12 +289,12 @@ export const getCampaigns = async (params) => http.get('/api/campaigns', {
   params,
   loading: models.campaigns,
   store: models.campaigns,
-  camelCase: (keyPath) => !keyPath.startsWith('.results.*.headers'),
+  camelCase: campaignCamelCase,
 });
 
 export const getCampaign = async (id) => http.get(`/api/campaigns/${id}`, {
   loading: models.campaigns,
-  camelCase: (keyPath) => !keyPath.startsWith('.headers'),
+  camelCase: campaignCamelCase,
 });
 
 export const getCampaignStats = async () => http.get('/api/campaigns/running/stats', {});
@@ -299,7 +302,7 @@ export const getCampaignStats = async () => http.get('/api/campaigns/running/sta
 export const createCampaign = async (data) => http.post(
   '/api/campaigns',
   data,
-  { loading: models.campaigns },
+  { loading: models.campaigns, camelCase: campaignCamelCase },
 );
 
 export const getCampaignViewCounts = async (params) => http.get(
@@ -337,20 +340,20 @@ export const testCampaign = async (data) => http.post(
 export const updateCampaign = async (id, data) => http.put(
   `/api/campaigns/${id}`,
   data,
-  { loading: models.campaigns },
+  { loading: models.campaigns, camelCase: campaignCamelCase },
 );
 
 export const changeCampaignStatus = async (id, status) => http.put(
   `/api/campaigns/${id}/status`,
   { status },
 
-  { loading: models.campaigns },
+  { loading: models.campaigns, camelCase: campaignCamelCase },
 );
 
 export const updateCampaignArchive = async (id, data) => http.put(
   `/api/campaigns/${id}/archive`,
   data,
-  { loading: models.campaigns },
+  { loading: models.campaigns, camelCase: campaignCamelCase },
 );
 
 export const deleteCampaign = async (id) => http.delete(

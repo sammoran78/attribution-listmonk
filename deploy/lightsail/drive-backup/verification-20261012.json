@@ -1,0 +1,20 @@
+{
+  "verified_at_utc": "2026-10-12T12:59:19.394436+00:00",
+  "files": [
+    "db-20261012T125918Z.dump",
+    "uploads-20261012T125918Z.tar.gz"
+  ],
+  "plaintext_bytes_total": 323628,
+  "verification": "rclone check --download --one-way through the crypt remote succeeded",
+  "scheduled_service_result": "success",
+  "scheduled_service_exit_status": 0,
+  "schedule": "03:00 Australia/Sydney daily",
+  "active_retention_days": 30,
+  "drive_folder_url": "https://drive.google.com/drive/folders/1dvS3WSt9xx9-8H1OmVLYix7vpcdZC7J_",
+  "drive_web_files_observed": 4,
+  "note": "Two successful initial backup runs, each containing a database dump and uploaded-media archive",
+  "database_restore_test_performed": false,
+  "temporary_lightsail_browser_ssh_removed": true,
+  "restored_ssh_source": "163.53.146.38/32",
+  "new_paid_resources_enabled": false
+}

@@ -48,12 +48,14 @@ def fold(line):
 
 def calendar(event):
     start, end = event_times(event)
-    title = event["event_title"].strip()
+    title = (event.get("calendar_title") or "CAIRN: Lunchtime Reading Group").strip()
     if not title:
-        raise ValueError("event_title must not be empty")
+        raise ValueError("calendar_title must not be empty")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     uid = event.setdefault("uid", str(uuid.uuid4()) + "@cairn.org.au")
     description = event.get("calendar_description", "")
+    if event.get("event_title"):
+        description = "Reading topic: " + event["event_title"] + "\n" + description
     if event.get("zoom_url"):
         description += "\n\nJoin Zoom: " + event["zoom_url"]
     if event.get("zoom_meeting_id"):

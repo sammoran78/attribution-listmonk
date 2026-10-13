@@ -1,5 +1,8 @@
 # Deployed listmonk on Lightsail
 
+Current signup integration and deployment: [Negro Matapacos signup verification](signup-verified-20261005.md). Compile builds off the production VM; see the memory incident and rollback notes there.
+
+
 Deployed 2 October 2026 with approval for the VM, metered sending, SNS delivery,
 simulator tests, and deletion of the old feedback pipeline.
 
@@ -245,3 +248,52 @@ checks existing List Roles, no-list access, global campaign/subscriber permissio
 overrides, and all-list access using temporary API users and roles; it removes
 those records and sends no email. The update uses the existing VM, PostgreSQL
 volume, and Docker services. It adds no AWS services or schema migration.
+
+## Campaign custom attributes and event links (9 October 2026)
+
+Image tag: 3f9177a5-event-links-20261009. Campaign responses preserve custom
+attribute and header keys on list/detail/create/update/archive/status operations.
+Previously the editor camel-cased nested custom keys, so saving/reopening a
+campaign could break a template that expected `zoom_url` or `calendar_ics_url`.
+verify-campaign-attributes.cjs checks the actual response interceptor and key
+transformer, including three JSON save/reopen cycles, without network calls.
+
+CAIRN template 5 accepts legacy camelCase keys as well as canonical snake_case.
+Draft 3's keys were normalized; the incorrect sample calendar was replaced with
+a separate Media file for 16 October 2026, 12:30–13:30 Sydney, and an invalid
+plain-text meeting-ID expression was corrected. HTML reading copy, list/media
+associations and draft status were preserved. The repair backup is private;
+templates/cairn/fix-event-links.py audits and checks guarded changes without mail.
+
+The full rebuild exceeded practical memory limits in the unchanged email builder.
+Dockerfile.campaign-attributes reuses the cached frontend stage before this API
+change and overlays only the new admin API module, with a 1 GiB Node heap limit.
+For that build the original API file was briefly restored with its original 664
+mode, the patched API was staged as campaign-api-update.js, and the working
+source was restored afterward. No VM resize, new AWS resource, or schema change
+was introduced. The prior image and environment remain available for rollback.
+
+Live verification after deployment: the signed-in editor saved draft 3, reloaded
+it and preserved its custom JSON keys verbatim. Its refreshed preview displayed
+the correct Sydney date/time, Google/Outlook/.ics links, Zoom button and meeting
+ID. The public calendar returned HTTP 200 with text/calendar. The campaign
+remained a draft and no email was sent. See the live verification receipt and
+screenshots under templates/cairn.
+
+## CAIRN sender recovery (9 October 2026)
+
+Campaign 3's sender name contained an unquoted colon. Go's mail parser returned
+`mail: expected comma` before SMTP transmission for all 23 recipients. Its
+default error threshold of 1000 was never reached, so exhausting the queue
+marked the zero-send campaign finished. All 25 stored views predated this send
+attempt; they are retained as historical pixel events, not delivery evidence.
+
+`validate-campaign-addresses.go` reproduced the exact original parser error and
+validated the quoted sender plus all 23 recipient addresses offline, without
+SMTP connections. `recover-campaign-sender.py` privately backed up the original
+row, guarded against concurrent changes and restored this specific finished,
+zero-send campaign to draft. It reset the subscriber checkpoints and start
+timestamp while retaining audience, content, calendar/Zoom attributes, views,
+and counters. The sender is now `"CAIRN: Creative AI Research Network"
+<newsletter@creativeattribution.com>`. The draft and preview were verified.
+No campaign was started, no email sent, and no AWS resource changed.

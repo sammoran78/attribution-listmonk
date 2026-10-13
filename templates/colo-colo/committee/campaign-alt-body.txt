@@ -1,0 +1,31 @@
+Hello{{ with .Subscriber.FirstName }} {{ . }}{{ end }},
+
+COLO COLO SYDNEY COMMITTEE
+{{ $e := .Campaign.Attribs.colocolo | default dict }}
+{{ $e.event_title | default "Committee meeting" }}
+{{ if and $e.start $e.end }}{{ $zone := $e.timezone | default "Australia/Sydney" }}{{ $start := mustToDate "2006-01-02T15:04:05Z07:00" $e.start }}{{ $end := mustToDate "2006-01-02T15:04:05Z07:00" $e.end }}
+{{ dateInZone "Monday, 2 January 2006" $start $zone }}
+{{ dateInZone "3:04 pm" $start $zone }}–{{ dateInZone "3:04 pm MST" $end $zone }} ({{ $zone }})
+{{ else }}Date and time to be confirmed.{{ end }}
+
+LOCATION
+{{ $e.location | default "Location to be confirmed" }}
+
+AGENDA
+[Add agenda items, decisions required and action owners.]
+
+PAPERS & APOLOGIES
+[Add document URLs, RSVP contact and deadline.]
+
+JOIN ON ZOOM
+{{ $e.zoom_url | default "Joining link to be confirmed." }}
+{{ with $e.zoom_meeting_id }}Meeting ID: {{ . }}{{ end }}
+{{ with $e.zoom_passcode }}Passcode: {{ . }}{{ end }}
+{{ with $e.calendar_ics_url }}Add to your calendar: {{ . }}{{ end }}
+
+The Colo Colo Sydney Committee
+https://colocolosydney.com/
+
+Manage preferences: {{ UnsubscribeURL }}?manage=true
+Unsubscribe: {{ UnsubscribeURL }}
+View in browser: {{ MessageURL }}

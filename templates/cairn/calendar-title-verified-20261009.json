@@ -1,0 +1,14 @@
+{
+  "campaign_id": 3,
+  "template_id": 5,
+  "calendar_title": "CAIRN: Lunchtime Reading Group",
+  "checks": "passed",
+  "calendar_ics_url": "https://lists.creativeattribution.com/uploads/cairn-joint-select-committee-2026-10-16.ics",
+  "uid_preserved": true,
+  "dates_preserved": true,
+  "html_topic_preserved": true,
+  "plain_text_unchanged": true,
+  "campaign_status": "draft",
+  "emails_sent": false,
+  "new_aws_resources": false
+}

@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CAIRN//Reading Group//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:cairn-lunchtime-reading-group-20261016-88625432585@cairn.org.au
+DTSTAMP:20261009T044313Z
+DTSTART:20261016T013000Z
+DTEND:20261016T023000Z
+SUMMARY:CAIRN: Lunchtime Reading Group
+DESCRIPTION:Reading topic: Joint Select Committee on Artificial Intelligenc
+ e\nCAIRN: Lunchtime Reading Group\n\nJoin Zoom: https://macquarie.zoom.us/
+ j/83101513504\nMeeting ID: 831 0151 3504
+LOCATION:https://macquarie.zoom.us/j/83101513504
+TRANSP:OPAQUE
+SEQUENCE:2
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT15M
+DESCRIPTION:CAIRN reading group starts in 15 minutes
+END:VALARM
+END:VEVENT
+END:VCALENDAR

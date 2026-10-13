@@ -1,0 +1,50 @@
+COLO COLO SYDNEY / MEMBERS
+{{ $c := .Campaign.Attribs.colocolo | default dict }}
+{{ $c.title }}
+{{ $c.intro }}
+
+Hello{{ with .Subscriber.FirstName }} {{ . }}{{ end }},
+
+Thank you for supporting Colo Colo Sydney. Here’s a look at the people, events and projects your membership helps bring together.
+
+01 / Looking back
+
+[Recent event highlight]
+
+[Add the event date, a short recap and a thank-you to the members and volunteers who made it happen.]
+
+
+
+02 / Your support at work
+
+[Project or fundraising goal]
+
+[Explain the project, who it will benefit and what member support is making possible.]
+
+Raised so far: [confirmed amount and reporting date]
+
+Our goal: [approved target]
+
+Next milestone: [what happens next and when]
+
+[Add a specific way members can help and a verified project link.]
+
+03 / Club notes
+
+[Member notices & next steps]
+
+[Add member updates, volunteering opportunities and the next progress report.]
+
+Help with the next chapter →: https://colocolosydney.com/get-involved/
+
+With thanks,
+
+The Colo Colo Sydney team
+
+
+Colo Colo Sports Social Club Incorporated
+P.O. Box 642, Fairfield, NSW 2165
+https://colocolosydney.com/
+Manage preferences: {{ UnsubscribeURL }}?manage=true
+Unsubscribe: {{ UnsubscribeURL }}
+View in browser: {{ MessageURL }}

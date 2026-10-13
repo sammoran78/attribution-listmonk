@@ -106,7 +106,8 @@ export default Vue.extend({
 
       h += '\n'
         + `    <p><input type="email" name="email" required placeholder="${this.$t('subscribers.email')}" /></p>\n`
-        + `    <p><input type="text" name="name" placeholder="${this.$t('public.subName')}" /></p>\n\n`;
+        + `    <p><input type="text" name="name" placeholder="${this.$t('public.subName')}" /></p>\n`
+        + `    <p><input type="tel" name="phone" maxlength="64" autocomplete="tel" placeholder="${this.$t('subscribers.phone')}" /></p>\n\n`;
 
       this.checked.forEach((i) => {
         const l = this.publicLists[parseInt(i, 10)];

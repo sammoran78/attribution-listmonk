@@ -1,0 +1,25 @@
+{
+  "campaign_id": 3,
+  "status": "draft",
+  "sent": 0,
+  "recipient_count": 23,
+  "sender": "\"CAIRN: Creative AI Research Network\" <newsletter@creativeattribution.com>",
+  "envelope_validation": {
+    "corrected_sender": "\"CAIRN: Creative AI Research Network\" <newsletter@creativeattribution.com>",
+    "emails_sent": 0,
+    "invalid_recipient_ids": [],
+    "original_sender_error": "mail: expected comma",
+    "recipients_checked": 23,
+    "smtp_connections": 0
+  },
+  "queue_checkpoint_reset": true,
+  "existing_views_retained": {
+    "count": 25,
+    "first": "2026-10-02T11:09:24.324965+00:00",
+    "last": "2026-10-09T04:50:43.477407+00:00",
+    "after_start": 0
+  },
+  "preview": "passed",
+  "emails_sent": false,
+  "new_aws_resources": false
+}

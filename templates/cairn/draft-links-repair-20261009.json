@@ -1,0 +1,60 @@
+{
+  "campaign_id": 3,
+  "checks": "passed",
+  "calendar_ics_url": "https://lists.creativeattribution.com/uploads/cairn-joint-select-committee-2026-10-16.ics",
+  "zoom_url": "https://macquarie.zoom.us/j/88625432585",
+  "backup": "/opt/listmonk/deploy/lightsail/secrets/cairn-event-links-before-20261009.json",
+  "emails_sent": false,
+  "before": {
+    "campaign_id": 3,
+    "name": "CAIRN reading group \u2014 Joint Select Committee on Artificial Intelligence",
+    "status": "draft",
+    "template_id": 5,
+    "attribs": {
+      "cairn": {
+        "calendarDescription": "CAIRN: Lunchtime Reading Group",
+        "calendarIcsUrl": "https://lists.creativeattribution.com/uploads/cairn-reading-group.ics",
+        "end": "2026-10-16T13:30:00+11:00",
+        "eventTitle": "Joint Select Committee on Artificial Intelligence",
+        "preheader": "Shared reading. New perspectives. Join the next CAIRN reading group.",
+        "start": "2026-10-16T12:30:00+11:00",
+        "timezone": "Australia/Sydney",
+        "zoomMeetingId": "886 2543 2585",
+        "zoomPasscode": "",
+        "zoomUrl": "https://macquarie.zoom.us/j/88625432585"
+      }
+    },
+    "campaign_hash": "bc7b9c828b5fc798efb6113d9768d445023f1ed19b208b60f0d2b4f36828bb88",
+    "template_hash": "843a591cd2417940b77dc043f0bce1654bffe8917237e5d571cd72eda788a4c1",
+    "template_reads": {
+      "zoom_url": true,
+      "zoomUrl": false,
+      "calendar_ics_url": true,
+      "calendarIcsUrl": false
+    },
+    "altbody": "Hello{{ with .Subscriber.FirstName }} {{ . }}{{ end }},\n\nCAIRN READING GROUP\n{{ $e := .Campaign.Attribs.cairn | default dict }}\n{{ $e.event_title | default \"Our next reading group\" }}\n{{ if and $e.start $e.end }}{{ $zone := $e.timezone | default \"Australia/Sydney\" }}{{ $start := mustToDate \"2006-01-02T15:04:05Z07:00\" $e.start }}{{ $end := mustToDate \"2006-01-02T15:04:05Z07:00\" $e.end }}\n{{ dateInZone \"Monday, 2 January 2006\" $start $zone }}\n{{ dateInZone \"3:04 pm\" $start $zone }}\u2013{{ dateInZone \"3:04 pm MST\" $end $zone }} ({{ $zone }})\n{{ else }}Date and time to be confirmed.{{ end }}\n\nWHAT WE'RE READING\n[Reading title]\n[Author(s), year \u00b7 publication]\n[Add the reading URL and a short introduction.]\n\nQUESTIONS TO BRING\n- [First discussion question]\n- [Second discussion question]\n\nJOIN ON ZOOM\n{{ $e.zoom_url | default \"https://macquarie.zoom.us/j/88625432585\" }}\n{{ with $e.zoom_meeting_id }}Meeting ID: {{ 886 2543 2585 }}{{ end }}\n{{ with $e.zoom_passcode }}Passcode: {{ . }}{{ end }}\n{{ with $e.calendar_ics_url }}Add to your calendar: {{ . }}{{ end }}\n\nThe CAIRN team\nhttps://www.cairn.org.au/\n\nManage preferences: {{ UnsubscribeURL }}?manage=true\nUnsubscribe: {{ UnsubscribeURL }}\nView in browser: {{ MessageURL }}\n",
+    "preview_links": [
+      "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Our+next+reading+group&dates=20261016T013000Z%2F20261016T023000Z&details=CAIRN+reading+group%3A+Our+next+reading+group%0A%0AZoom%3A+Joining+link+to+be+confirmed&location=Online+via+Zoom&ctz=Australia%2FSydney",
+      "https://outlook.office.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=Our+next+reading+group&startdt=2026-10-16T01%3A30%3A00Z&enddt=2026-10-16T02%3A30%3A00Z&body=CAIRN+reading+group%3A+Our+next+reading+group%0A%0AZoom%3A+Joining+link+to+be+confirmed&location=Online+via+Zoom"
+    ],
+    "preview_has_zoom_button": false
+  },
+  "after": {
+    "preview_links": [
+      "https://lists.creativeattribution.com/campaign/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000",
+      "https://www.cairn.org.au/",
+      "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Joint+Select+Committee+on+Artificial+Intelligence&dates=20261016T013000Z%2F20261016T023000Z&details=CAIRN+reading+group%3A+Joint+Select+Committee+on+Artificial+Intelligence%0ACAIRN%3A+Lunchtime+Reading+Group%0AZoom%3A+https%3A%2F%2Fmacquarie.zoom.us%2Fj%2F88625432585&location=https%3A%2F%2Fmacquarie.zoom.us%2Fj%2F88625432585&ctz=Australia%2FSydney",
+      "https://outlook.office.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=Joint+Select+Committee+on+Artificial+Intelligence&startdt=2026-10-16T01%3A30%3A00Z&enddt=2026-10-16T02%3A30%3A00Z&body=CAIRN+reading+group%3A+Joint+Select+Committee+on+Artificial+Intelligence%0ACAIRN%3A+Lunchtime+Reading+Group%0AZoom%3A+https%3A%2F%2Fmacquarie.zoom.us%2Fj%2F88625432585&location=https%3A%2F%2Fmacquarie.zoom.us%2Fj%2F88625432585",
+      "https://lists.creativeattribution.com/uploads/cairn-joint-select-committee-2026-10-16.ics",
+      "https://www.aph.gov.au/Parliamentary_Business/Committees/Joint/Artificial_Intelligence/ArtificialIntelligence/Submissions",
+      "https://www.aph.gov.au/Parliamentary_Business/Committees/Joint/Artificial_Intelligence/ArtificialIntelligence/Public_Hearings",
+      "https://macquarie.zoom.us/j/88625432585",
+      "https://macquarie.zoom.us/j/88625432585",
+      "https://www.cairn.org.au/",
+      "https://lists.creativeattribution.com/subscription/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000?manage=true",
+      "https://lists.creativeattribution.com/subscription/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000"
+    ],
+    "preview_has_zoom_button": true,
+    "status": "draft"
+  }
+}

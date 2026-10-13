@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/jmoiron/sqlx/types"
@@ -39,6 +40,30 @@ type Subscriber struct {
 type subLists struct {
 	SubscriberID int            `db:"subscriber_id"`
 	Lists        types.JSONText `db:"lists"`
+}
+
+// Phone returns the optional phone number stored with the subscriber's attributes.
+func (s Subscriber) Phone() string {
+	phone, _ := s.Attribs["phone"].(string)
+	return phone
+}
+
+// SetPhone preserves international formatting and other subscriber attributes.
+// An empty value removes the phone number.
+func (s *Subscriber) SetPhone(phone string) error {
+	phone = strings.TrimSpace(phone)
+	if utf8.RuneCountInString(phone) > 64 {
+		return errors.New("phone number must be at most 64 characters")
+	}
+	if phone == "" {
+		delete(s.Attribs, "phone")
+		return nil
+	}
+	if s.Attribs == nil {
+		s.Attribs = JSON{}
+	}
+	s.Attribs["phone"] = phone
+	return nil
 }
 
 // GetIDs returns the list of subscriber IDs.

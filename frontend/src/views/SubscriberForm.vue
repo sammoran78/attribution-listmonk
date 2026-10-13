@@ -24,6 +24,11 @@
             :placeholder="$t('subscribers.email')" required />
         </b-field>
 
+        <b-field :label="$t('subscribers.phone')" label-position="on-border">
+          <b-input :maxlength="64" v-model="form.phone" name="phone" type="tel" autocomplete="tel"
+            :placeholder="$t('subscribers.phone')" />
+        </b-field>
+
         <div class="columns">
           <div class="column is-8">
             <b-field :label="$t('globals.fields.name')" label-position="on-border">
@@ -199,6 +204,7 @@ export default Vue.extend({
       form: {
         lists: [],
         strAttribs: '{}',
+        phone: '',
         status: 'enabled',
         preconfirm: false,
       },
@@ -251,12 +257,9 @@ export default Vue.extend({
     },
 
     createSubscriber() {
-      let attribs = {};
-      if (this.form.strAttribs) {
-        attribs = this.validateAttribs(this.form.strAttribs);
-        if (!attribs) {
-          return;
-        }
+      const attribs = this.subscriberAttribs();
+      if (!attribs) {
+        return;
       }
 
       const data = {
@@ -280,12 +283,9 @@ export default Vue.extend({
     },
 
     updateSubscriber() {
-      let attribs = {};
-      if (this.form.strAttribs) {
-        attribs = this.validateAttribs(this.form.strAttribs);
-        if (!attribs) {
-          return;
-        }
+      const attribs = this.subscriberAttribs();
+      if (!attribs) {
+        return;
       }
 
       const data = {
@@ -315,6 +315,21 @@ export default Vue.extend({
       });
     },
 
+    subscriberAttribs() {
+      const attribs = this.validateAttribs(this.form.strAttribs || '{}');
+      if (!attribs) {
+        return null;
+      }
+      // The dedicated field owns phone; keep all other attributes intact.
+      const phone = this.form.phone.trim();
+      if (phone) {
+        attribs.phone = phone;
+      } else {
+        delete attribs.phone;
+      }
+      return attribs;
+    },
+
     validateAttribs(str) {
       // Parse and validate attributes JSON.
       let attribs = {};
@@ -329,8 +344,8 @@ export default Vue.extend({
         );
         return null;
       }
-      if (attribs instanceof Array) {
-        this.$utils.toast('Attributes should be a map {} and not an array []', 'is-danger', 3000);
+      if (!attribs || typeof attribs !== 'object' || Array.isArray(attribs)) {
+        this.$utils.toast('Attributes should be a JSON object {}', 'is-danger', 3000);
         return null;
       }
 
@@ -352,11 +367,13 @@ export default Vue.extend({
 
   mounted() {
     if (this.$props.isEditing) {
+      const { phone, ...attribs } = this.$props.data.attribs || {};
       this.form = {
         ...this.$props.data,
+        phone: phone == null ? '' : String(phone),
 
-        // Deep-copy the lists array on to the form.
-        strAttribs: JSON.stringify(this.$props.data.attribs, null, 4),
+        // Phone is edited separately from the other attributes.
+        strAttribs: JSON.stringify(attribs, null, 4),
       };
     }
 

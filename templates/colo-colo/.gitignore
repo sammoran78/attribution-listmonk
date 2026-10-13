@@ -1,0 +1,8 @@
+__pycache__/
+source-*
+*/preview*.png
+*/preview*.html
+*/preview-plain.txt
+*/sample-preview.html
+overview.html
+overview.png

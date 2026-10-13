@@ -1,0 +1,58 @@
+COLO COLO SYDNEY / NEWSLETTER
+{{ $c := .Campaign.Attribs.colocolo | default dict }}
+{{ $c.title }}
+{{ $c.intro }}
+
+Hello{{ with .Subscriber.FirstName }} {{ . }}{{ end }},
+
+01 / Coming up
+
+[Featured upcoming event]
+
+[Add a lively event introduction: what’s happening, who it’s for and why to come along.]
+
+When: [confirmed date and time]
+
+Where: [venue and suburb]
+
+Entry: [confirmed price or free entry]
+
+[Add the verified booking link and booking deadline.]
+
+Explore the Chilean Festival →: https://colocolosydney.com/chilean-festival/
+
+
+
+02 / Get on the pitch
+
+Football for the next generation
+
+Discover Escuela Colo-Colo Sydney and register your interest in the youth football program.
+
+[Add confirmed upcoming football events, open days or registration news.]
+
+Explore Escuela football →: https://colocolosydney.com/escuela/
+
+03 / Make it your club
+
+Become a member
+
+Help keep Chilean culture, club events and community projects growing in Sydney. Membership is one way to support the club’s future and bring your ideas to it.
+
+Become a member →: https://colocolosydney.com/membership/
+
+Also coming up
+
+[More dates for your diary]
+
+[Event · date · booking link]
+
+[Community activity · date · details link]
+
+
+Colo Colo Sports Social Club Incorporated
+P.O. Box 642, Fairfield, NSW 2165
+https://colocolosydney.com/
+Manage preferences: {{ UnsubscribeURL }}?manage=true
+Unsubscribe: {{ UnsubscribeURL }}
+View in browser: {{ MessageURL }}

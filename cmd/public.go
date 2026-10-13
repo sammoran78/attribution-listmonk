@@ -259,6 +259,7 @@ func (a *App) SubscriptionPrefs(c echo.Context) error {
 	// Read the form.
 	var req struct {
 		Name      string   `form:"name" json:"name"`
+		Phone     *string  `form:"phone" json:"phone"`
 		ListUUIDs []string `form:"l" json:"list_uuids"`
 		Blocklist bool     `form:"blocklist" json:"blocklist"`
 		Manage    bool     `form:"manage" json:"manage"`
@@ -305,6 +306,13 @@ func (a *App) SubscriptionPrefs(c echo.Context) error {
 				"name", a.i18n.T("globals.terms.subscriber"))))
 	}
 	sub.Name = req.Name
+	// Older embedded forms may omit phone. Only change it when supplied.
+	if req.Phone != nil {
+		if err := sub.SetPhone(*req.Phone); err != nil {
+			return c.Render(http.StatusBadRequest, tplMessage,
+				makeMsgTpl(a.i18n.T("public.errorTitle"), "", a.i18n.T("subscribers.invalidPhone")))
+		}
+	}
 
 	// Update the subscriber properties in the DB.
 	if _, err := a.core.UpdateSubscriber(sub.ID, sub); err != nil {
@@ -731,6 +739,7 @@ func (a *App) processSubForm(c echo.Context) (bool, error) {
 	var req struct {
 		Name          string   `form:"name" json:"name"`
 		Email         string   `form:"email" json:"email"`
+		Phone         string   `form:"phone" json:"phone"`
 		FormListUUIDs []string `form:"l" json:"list_uuids"`
 	}
 	if err := c.Bind(&req); err != nil {
@@ -760,6 +769,15 @@ func (a *App) processSubForm(c echo.Context) (bool, error) {
 		return false, echo.NewHTTPError(http.StatusBadRequest, a.i18n.T("subscribers.invalidName"))
 	}
 
+	subscriber := models.Subscriber{
+		Name:   req.Name,
+		Email:  req.Email,
+		Status: models.SubscriberStatusEnabled,
+	}
+	if err := subscriber.SetPhone(req.Phone); err != nil {
+		return false, echo.NewHTTPError(http.StatusBadRequest, a.i18n.T("subscribers.invalidPhone"))
+	}
+
 	listUUIDs := pq.StringArray(req.FormListUUIDs)
 
 	// Fetch the list types and ensure that they are not private.
@@ -775,11 +793,7 @@ func (a *App) processSubForm(c echo.Context) (bool, error) {
 	}
 
 	// Insert the subscriber into the DB.
-	_, hasOptin, err := a.core.InsertSubscriber(models.Subscriber{
-		Name:   req.Name,
-		Email:  req.Email,
-		Status: models.SubscriberStatusEnabled,
-	}, nil, listUUIDs, false, true)
+	_, hasOptin, err := a.core.InsertSubscriber(subscriber, nil, listUUIDs, false, true)
 	if err == nil {
 		return hasOptin, nil
 	}

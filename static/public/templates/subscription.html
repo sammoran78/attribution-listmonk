@@ -31,6 +31,9 @@
                 <label>{{ L.T "globals.fields.name" }}</label>
                 <input type="text" name="name" value="{{ .Data.Subscriber.Name }}" maxlength="256" required />
 
+                <label for="phone">{{ L.T "subscribers.phone" }}</label>
+                <input id="phone" type="tel" name="phone" value="{{ .Data.Subscriber.Phone }}" maxlength="64" autocomplete="tel" />
+
                 {{ if .Data.Subscriptions }}
                     <br /><br />
                     <h3>{{ L.T "public.managePrefsUnsub" }}</h3>
