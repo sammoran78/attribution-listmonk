@@ -1,0 +1,11 @@
+{
+  "public_optional_input": "passed",
+  "admin_create_edit_read_and_export": "passed",
+  "preferences_edit_omit_and_clear": "passed",
+  "admin_clear_preserves_other_attributes": "passed",
+  "public-api_stored_record": "passed",
+  "public-form_stored_record": "passed",
+  "email-only_stored_record": "passed",
+  "mail_sent": false,
+  "temporary_fixtures_removed": true
+}

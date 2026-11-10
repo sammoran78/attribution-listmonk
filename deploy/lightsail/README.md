@@ -2,6 +2,22 @@
 
 Current signup integration and deployment: [Negro Matapacos signup verification](signup-verified-20261005.md). Compile builds off the production VM; see the memory incident and rollback notes there.
 
+Current app image (13 October 2026): `attribution-listmonk:44f28939-phone-20261013`,
+from commit `44f28939ddbab74b95bf6d86843ef1b1b7e0b957`. Optional subscriber phone
+numbers are live in the admin editor, public signup, embedded forms and
+preferences, stored as `attribs.phone`. Existing email-only forms still work.
+The Linux binary and both frontends were built locally and added to the existing
+runtime image. No schema migration or new cloud resource was needed.
+
+The local backup service completed before the app switch. Rollback uses the
+previous `3f9177a5-event-links-20261009` image and the server's private
+`.env.before-phone-20261013`, followed by `sudo docker compose up -d --no-deps app`.
+Live checks covered saved values, editing, clearing, CSV exports, public API/form
+signup, and preference submissions that omit the phone field. Test records and
+their temporary single-opt-in list were removed; no verification email was sent.
+See `verify-phone.py` and `phone-verified-20261013.json` for the repeatable check
+and result. Deployment remains manual; pushing a commit does not update Lightsail.
+
 
 Deployed 2 October 2026 with approval for the VM, metered sending, SNS delivery,
 simulator tests, and deletion of the old feedback pipeline.
